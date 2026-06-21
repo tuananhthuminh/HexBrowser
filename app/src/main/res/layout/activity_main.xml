@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập Text hoặc Hex" />
+
+        <Button
+            android:id="@+id/btnEncode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text → Hex" />
+
+        <Button
+            android:id="@+id/btnDecode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hex → Text" />
+
+        <EditText
+            android:id="@+id/outputText"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="top"
+            android:hint="Kết quả"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/btnCopy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Copy kết quả" />
+
+        <Button
+            android:id="@+id/btnPaste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Paste" />
+
+        <Button
+            android:id="@+id/btnOpen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mở bằng trình duyệt" />
+
+    </LinearLayout>
+
+</ScrollView>
