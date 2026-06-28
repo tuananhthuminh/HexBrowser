@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-java@v4
@@ -25,16 +26,39 @@ jobs:
 
       - run: chmod +x gradlew
 
-      - run: ./gradlew assembleDebug
+      - name: Build APK
+        run: ./gradlew assembleDebug
 
-      - run: |
+      - name: Rename APK
+        run: |
           cp app/build/outputs/apk/debug/app-debug.apk HexBrowser.apk
 
-      - name: Upload to Latest Release
-        uses: svenstaro/upload-release-action@v2
+      - name: Delete old asset
+        uses: actions/github-script@v7
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: latest
-          file: HexBrowser.apk
-          asset_name: HexBrowser.apk
-          overwrite: true
+          script: |
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+
+            const release = await github.rest.repos.getReleaseByTag({
+              owner,
+              repo,
+              tag: 'latest'
+            })
+
+            for (const asset of release.data.assets) {
+              if (asset.name === 'HexBrowser.apk') {
+                await github.rest.repos.deleteReleaseAsset({
+                  owner,
+                  repo,
+                  asset_id: asset.id
+                })
+              }
+            }
+
+      - name: Upload APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest
+          files: HexBrowser.apk
