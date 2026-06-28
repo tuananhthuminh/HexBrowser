@@ -1,12 +1,9 @@
-name: Build APK & Release
+name: Build APK
 
 on:
   push:
-    tags:
-      - "v*"
-
-permissions:
-  contents: write
+    branches:
+      - master
 
 jobs:
   build:
@@ -33,8 +30,13 @@ jobs:
       - name: Build APK
         run: ./gradlew assembleDebug
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
+      - name: Rename APK
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk HexBrowser.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            app/build/outputs/apk/debug/app-debug.apk
+          name: HexBrowser
+          path: HexBrowser.apk
+          overwrite: true
